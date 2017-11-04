@@ -1,3 +1,12 @@
+os: linux
+language: cpp
+sudo: false
+dist: precise
+addons:
+  apt:
+    packages:
+     - gdb
+     - apport
 compiler:
  # gcc compiler, clang would be fine too
  - gcc
@@ -13,22 +22,11 @@ before_install:
  - service --status-all || true
  - initctl list || true
 
-matrix:
-  include:
-    - os: linux
-      language: cpp
-      sudo: false
-      dist: precise
-      addons:
-        apt:
-          packages:
-           - gdb
-           - apport
-      script:
-       - make
-       - ulimit -c unlimited -S
-       - ./test
-       - ./test --crashplx || RESULT=$?
-       - ls -l
-       - if [[ ${RESULT} != 139 ]]; then echo "expected segfault and 139 exit but instead exited with ${RESULT}" && exit 1; fi;
-       - for i in $(find ./ -maxdepth 1 -name 'core*' -print); do gdb $(pwd)/test core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done;
+script:
+ - make
+ - ulimit -c unlimited -S
+ - ./test
+ - ./test --crashplx || RESULT=$?
+ - ls -l
+ - if [[ ${RESULT} != 139 ]]; then echo "expected segfault and 139 exit but instead exited with ${RESULT}" && exit 1; fi;
+ - for i in $(find ./ -maxdepth 1 -name 'core*' -print); do gdb $(pwd)/test core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done;

@@ -7,6 +7,8 @@ addons:
     packages:
      - gdb
      - apport
+     - gcc-7
+     - g++-7
 compiler:
  # gcc compiler, clang would be fine too
  - gcc

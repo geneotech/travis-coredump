@@ -9,6 +9,7 @@ addons:
      - apport
      - gcc-7
      - g++-7
+     - cmake
     sources:
       - ubuntu-toolchain-r-test
 compiler:
@@ -28,6 +29,7 @@ before_install:
 
 script:
  - gcc -v && g++ -v
+ - cmake -DCMAKE_CXX_FLAGS="-m64" -DCMAKE_C_FLAGS="-m64" -DCMAKE_BUILD_TYPE=Debug -D CMAKE_C_COMPILER=gcc-7 -D CMAKE_CXX_COMPILER=g++-7 CMakeLists.txt
  - make
  - ulimit -c unlimited -S
  - ./test

@@ -36,4 +36,4 @@ script:
  - ./travis_coredump --crashplx || RESULT=$?
  - ls -l
  - if [[ ${RESULT} != 139 ]]; then echo "expected segfault and 139 exit but instead exited with ${RESULT}" && exit 1; fi;
- - for i in $(find ./ -maxdepth 1 -name 'core*' -print); do gdb $(pwd)/test core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done;
+ - for i in $(find ./ -maxdepth 1 -name 'core*' -print); do gdb $(pwd)/travis_coredump core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done;

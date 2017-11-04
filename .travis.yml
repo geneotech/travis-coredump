@@ -9,6 +9,8 @@ addons:
      - apport
      - gcc-7
      - g++-7
+    sources:
+      - ubuntu-toolchain-r-test
 compiler:
  # gcc compiler, clang would be fine too
  - gcc

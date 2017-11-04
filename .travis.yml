@@ -1,7 +1,7 @@
 os: linux
 language: cpp
-sudo: false
-dist: precise
+sudo: required
+dist: trusty
 addons:
   apt:
     packages:

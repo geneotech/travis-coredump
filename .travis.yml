@@ -32,8 +32,8 @@ script:
  - cmake -DCMAKE_CXX_FLAGS="-m64" -DCMAKE_C_FLAGS="-m64" -DCMAKE_BUILD_TYPE=Debug -D CMAKE_C_COMPILER=gcc-7 -D CMAKE_CXX_COMPILER=g++-7 CMakeLists.txt
  - make
  - ulimit -c unlimited -S
- - ./test
- - ./test --crashplx || RESULT=$?
+ - ./travis_coredump
+ - ./travis_coredump --crashplx || RESULT=$?
  - ls -l
  - if [[ ${RESULT} != 139 ]]; then echo "expected segfault and 139 exit but instead exited with ${RESULT}" && exit 1; fi;
  - for i in $(find ./ -maxdepth 1 -name 'core*' -print); do gdb $(pwd)/test core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done;

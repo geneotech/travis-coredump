@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
   b bb;
   bb.f();
   static_assert(is_one_of_v<int, double, int>);
-  !static_assert(is_one_of_v<int, double>);
+  static_assert(!is_one_of_v<int, double>);
   
   std::optional<int> abc = argc;
   std::variant<int, double> vvv = argc;

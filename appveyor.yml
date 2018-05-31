@@ -15,8 +15,8 @@ install:
 test:
   assemblies:
     only:
-      - '**\*.travis-coredump.exe'
-      - '**\*.travis-coredump-Debug.exe'
+      - '**\*.travis_coredump.exe'
+      - '**\*.travis_coredump-Debug.exe'
 
 notifications:
   - provider: Email

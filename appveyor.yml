@@ -1,0 +1,37 @@
+version: 1.0.{build}
+branches:
+  only:
+    - master
+
+image: Visual Studio 2017 Preview
+configuration: Release
+build:
+  parallel: true                  # enable MSBuild parallel builds
+  project: dev/travis-coredump.sln      # path to Visual Studio solution or project
+  verbosity: minimal
+install:
+  - git submodule update --init --recursive
+
+test:
+  assemblies:
+    only:
+      - '**\*.travis-coredump.exe'
+      - '**\*.travis-coredump-Debug.exe'
+
+notifications:
+  - provider: Email
+    to:
+      - some@email.com
+    on_build_success: false
+    on_build_failure: false
+    on_build_status_changed: false
+
+
+before_build:
+  - mkdir dev
+  - cd dev
+  - cmake -G "Visual Studio 15 2017 Win64" ..
+
+test_script:
+  - ps: '& "$env:CONFIGURATION/travis-coredump.exe"'
+  - ps: 'if($LastExitCode -ne 139) { $host.SetShouldExit($LastExitCode ) }'
